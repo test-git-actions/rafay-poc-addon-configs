@@ -1,0 +1,15 @@
+controller:
+  electionID: internal-ingress-controller-leader
+  ingressClass: nginx-internal  # default: nginx
+  ingressClassResource:
+    name: nginx-internal  # default: nginx
+    enabled: true
+    default: false
+    controllerValue: "k8s.io/internal-ingress-nginx"  # default: k8s.io/ingress-nginx
+  service:
+    loadBalancerIP: {{{ .global.Rafay.ClusterLabels.NginxIngressInternalLBIP }}}
+    annotations:
+      cloud.google.com/load-balancer-type: "Internal"
+      networking.gke.io/internal-load-balancer-allow-global-access: "true"
+      cloud.google.com/network-tier: "Premium"
+ 
