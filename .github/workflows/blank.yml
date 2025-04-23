@@ -51,7 +51,7 @@ jobs:
       - name: Configure JFrog CLI for Xray
         run: |
           jf c add xray-server \
-            --url=${{env.JF_RT_URL}} \
+            --url=${{ env.JF_RT_URL }} \
             --access-token=${{ secrets.JFROG_TOKEN }} \
             --interactive=false
 
@@ -60,6 +60,8 @@ jobs:
 
       - name: Xray Scan
         run: |
+          jf c add xray --url=${{ env.JF_RT_URL }} --access-token=${{ secrets.JFROG_TOKEN }} --interactive=false
+
           jf scan . --extended-table=true
 
       # - name: 🔍 Scan Kubernetes YAMLs for misconfigurations
