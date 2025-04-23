@@ -1,0 +1,16 @@
+controller:
+  electionID: external-ingress-controller-leader
+  ingressClass: nginx-external  # default: nginx
+  ingressClassResource:
+    name: nginx-external  # default: nginx
+    enabled: true
+    default: false
+    controllerValue: "k8s.io/external-ingress-nginx"  # default: k8s.io/ingress-nginx
+  service:
+    externalTrafficPolicy: Local
+    loadBalancerIP: {{{ .global.Rafay.ClusterLabels.NginxIngressExternalLBIP }}}
+    annotations:
+      cloud.google.com/network-tier: "Premium"
+      networking.gke.io/internal-load-balancer-allow-global-access: "true"
+      cloud.google.com/l4-rbs: "enabled"
+      networking.gke.io/weighted-load-balancing: "pods-per-node"
