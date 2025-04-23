@@ -57,8 +57,14 @@ jobs:
             --access-token=${{ secrets.JFROG_TOKEN }} \
             --interactive=false
 
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Run vulnerability scan on Rafay addon configs
+        run: |
+          jf scan \
+            --watches "*" \                             # Use specific watch if configured
+            --format json \                             # Use json for deeper output, or 'table' for human readable
+            --fail=true \                               # Fail the job on issues (set false to just warn)
+            --severity=medium,high,critical \           # Optional: scan only for these severity levels
+            ./
 
       - name: Xray Scan
         run: |
