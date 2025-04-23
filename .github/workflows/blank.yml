@@ -32,9 +32,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
           token: ${{ secrets.GH_PAT }}
-          lfs: true
 
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4
