@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  JF_RT_URL: https://mgmresorts.jfrog.io
+  JFROG_USERNAME: 'pkumar@mgmresorts.com'
+  RT_REPO_VIRTUAL: 'rafay-poc-addon-configs'
+  JFROG_CLI_LOG_LEVEL: 'ERROR'
+  BUILD_NAME: 'rafay-poc'
+  BUILD_ID: "rafay-poc.$(date '+%Y-%m-%d-%H-%M')"
+  RBv2_SIGNING_KEY: 'mgmkey'
+  DISABLE_JOB_SUMMARY: false;
+
+permissions:
+  actions: read # for detecting the Github Actions environment.
+  id-token: write # for creating OIDC tokens for signing.
+  packages: write # for uploading attestations.
+  contents: write # to push updates while version bump and publish to repo, read is fine if there is just read operation​
+  security-events: write # Required for uploading code scanning.
+  issues: read
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v4
+        id: setup-cli
+        with:
+          version: 2.71.0
+          disable-job-summary: ${{env.JOB_SUMMARY}}
+        env:
+          JF_URL: ${{env.JF_RT_URL}}
+          JFROG_CLI_RELEASES_REPO: '${{ env.JF_RT_URL }}/artifactory/${{ env.RT_REPO_VIRTUAL}}' 
+          JFROG_CLI_EXTRACTORS_REMOTE: '${{ env.JF_RT_URL }}/artifactory/${{ env.RT_REPO_VIRTUAL}}'
+          JF_GIT_TOKEN: ${{ secrets.GH_PAT }}
+          JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
+
+      - name: Run a one-line script
+        run: echo Hello, world!
+
