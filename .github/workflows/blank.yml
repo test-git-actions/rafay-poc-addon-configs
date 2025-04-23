@@ -10,7 +10,7 @@ on:
 env:
   JF_RT_URL: https://mgmresorts.jfrog.io
   JFROG_USERNAME: 'pkumar@mgmresorts.com'
-  RT_REPO_VIRTUAL: 'rafay-poc-addon-configs-generic-dev-virtual'
+  RT_REPO_VIRTUAL: 'rafay-poc-addon-configs-generic-dev-local'
   JFROG_CLI_LOG_LEVEL: 'ERROR'
   BUILD_NAME: 'rafay-poc'
   BUILD_ID: "rafay-poc.$(date '+%Y-%m-%d-%H-%M')"
