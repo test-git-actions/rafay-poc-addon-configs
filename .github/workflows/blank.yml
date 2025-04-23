@@ -49,6 +49,15 @@ jobs:
       - name: Set the JFrog Token
         run: echo JFROG_TOKEN=${{ steps.setup-cli.outputs.oidc-token }} >> $GITHUB_ENV
 
+      - name: Check if JFROG_TOKEN is available
+        run: |
+          if [ -z "$JFROG_TOKEN" ]; then
+            echo "Token is missing!"
+            exit 1
+          else
+            echo "JFROG_TOKEN is present"
+          fi
+
       - name: Configure JFrog CLI for Xray
         run: |
           echo $JFROG_TOKEN
