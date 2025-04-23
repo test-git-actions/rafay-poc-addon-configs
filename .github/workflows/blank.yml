@@ -63,6 +63,6 @@ jobs:
 
       - name: Run Xray scan on Kubernetes configs
         run: |
-          jf scan rafay-poc-addon-configs/ --fail=false
+          jf scan . --fail=false
 
 
