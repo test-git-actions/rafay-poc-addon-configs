@@ -60,7 +60,7 @@ jobs:
 
       - name: Xray Scan
         run: |
-          jf c add xray --url=${{ env.JF_RT_URL }} --access-token=${{ secrets.JFROG_TOKEN }} --interactive=false
+          jf c add xray --url=${{ env.JF_RT_URL }} --access-token=$JFROG_TOKEN --interactive=false
 
           jf scan . --extended-table=true
 
