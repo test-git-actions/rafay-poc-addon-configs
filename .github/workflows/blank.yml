@@ -48,10 +48,14 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
 
-      - name: 🔍 Scan Kubernetes YAMLs for misconfigurations
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: config
-          scan-ref: ./cert-manager/
+      # - name: 🔍 Scan Kubernetes YAMLs for misconfigurations
+      #   uses: aquasecurity/trivy-action@master
+      #   with:
+      #     scan-type: config
+      #     scan-ref: ./cert-manager/
+
+      - name: Run Xray scan on Kubernetes configs
+        run: |
+          jf scan rafay-poc-addon-configs/ --fail=false
 
 
