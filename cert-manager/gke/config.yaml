@@ -1,0 +1,12 @@
+
+# Enable CRD installation
+crds:
+  enabled: true
+
+# Set number of pods for HA
+replicaCount: 3
+
+# Set pod disruption budget to allow for nodes to be cycled during maintenance.
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
