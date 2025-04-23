@@ -23,14 +23,18 @@ permissions:
   packages: write # for uploading attestations.
   contents: write # to push updates while version bump and publish to repo, read is fine if there is just read operation​
   security-events: write # Required for uploading code scanning.
-  issues: read
   
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_PAT }}
+          lfs: true
 
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4
