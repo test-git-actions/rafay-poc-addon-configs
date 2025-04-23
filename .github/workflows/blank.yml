@@ -47,7 +47,9 @@ jobs:
           JF_ACCESS_TOKEN: $JF_ACCESS_TOKEN
 
       - name: Set the JFrog Token
-        run: echo JFROG_TOKEN=${{ steps.setup-cli.outputs.oidc-token }} || $JF_ACCESS_TOKEN >> $GITHUB_ENV
+        run: |
+          echo "JFROG_TOKEN=${{ steps.setup-cli.outputs.oidc-token || env.JF_ACCESS_TOKEN }}" >> $GITHUB_ENV
+
 
       - name: Check if JF_ACCESS_TOKEN is available
         run: |
