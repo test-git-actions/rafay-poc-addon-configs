@@ -37,7 +37,7 @@ jobs:
         id: setup-cli
         with:
           version: 2.71.0
-          disable-job-summary: ${{env.DISABLE_JOB_SUMMARY}}
+          disable-job-summary: false
         env:
           JF_URL: ${{env.JF_RT_URL}}
           JFROG_CLI_RELEASES_REPO: '${{ env.JF_RT_URL }}/artifactory/${{ env.RT_REPO_VIRTUAL}}' 
