@@ -51,6 +51,7 @@ jobs:
 
       - name: Configure JFrog CLI for Xray
         run: |
+          echo $JFROG_TOKEN
           jf c add xray-server \
             --url=${{ env.JF_RT_URL }} \
             --access-token=${{ secrets.JFROG_TOKEN }} \
@@ -61,9 +62,10 @@ jobs:
 
       - name: Xray Scan
         run: |
-          jf c add xray --url=${{ env.JF_RT_URL }} --access-token=$JF_ACCESS_TOKEN --interactive=false
-
           jf scan . --extended-table=true
+        env:
+          JF_URL: ${{ env.JF_RT_URL }}
+          JF_ACCESS_TOKEN: ${{ env.JFROG_TOKEN }}
 
       # - name: 🔍 Scan Kubernetes YAMLs for misconfigurations
       #   uses: aquasecurity/trivy-action@master
