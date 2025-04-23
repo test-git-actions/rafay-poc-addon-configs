@@ -45,6 +45,9 @@ jobs:
           # JF_GIT_TOKEN: ${{ secrets.GH_PAT }}
           JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
 
+      - name: Set the JFrog Token
+        run: echo JFROG_TOKEN=${{ steps.setup-cli.outputs.oidc-token }} >> $GITHUB_ENV
+
       - name: Configure JFrog CLI for Xray
         run: |
           jf c add xray-server \
