@@ -1,0 +1,34 @@
+controller:
+  kind: DaemonSet
+  ingressClass: haproxy-external
+  ingressClassResource:
+    name: haproxy-external
+  service:
+    type: LoadBalancer
+    loadBalancerIP: {{{ .global.Rafay.ClusterLabels.IngressExternalLBIP }}} # This doesnt seem to work for external IPs...?
+    externalTrafficPolicy: Local
+    containerPort:
+      http: 80
+      https: 443
+      stat: 1024
+      healthz: 1042
+    nodePorts:
+      http: 31000
+      https: 31001
+      stat: 31002
+      healthz: 32042
+    tcpPorts:
+      - name: healthz
+        port: 1042
+        targetPort: 1042
+        nodePort: 32042
+    annotations:
+      cloud.google.com/network-tier: "Premium"
+      networking.gke.io/internal-load-balancer-allow-global-access: "true"
+      cloud.google.com/l4-rbs: "enabled"
+      networking.gke.io/weighted-load-balancing: "pods-per-node"
+  extraArgs:
+    - --namespace haproxy-ingress
+    - --create-namespace
+  startupProbe:
+    initialDelaySeconds: 15
