@@ -45,26 +45,7 @@ jobs:
           # JFROG_CLI_RELEASES_REPO: '${{ env.JF_RT_URL }}/artifactory/${{ env.RT_REPO_VIRTUAL}}' 
           # JFROG_CLI_EXTRACTORS_REMOTE: '${{ env.JF_RT_URL }}/artifactory/${{ env.RT_REPO_VIRTUAL}}'
           # JF_GIT_TOKEN: ${{ secrets.GH_PAT }}
-          JF_ACCESS_TOKEN: $JFROG_TOKEN
-
-      - name: Check if JFROG_TOKEN is available
-        run: |
-          if [ -z "$JFROG_TOKEN" ]; then
-            echo "Token is missing!"
-            exit 1
-          else
-            echo "JFROG_TOKEN is present"
-          fi
-        env:
-          JFROG_TOKEN: ${{ secrets.JFROG_TOKEN }}
-
-      - name: Configure JFrog CLI for Xray
-        run: |
-          echo $JFROG_TOKEN
-          jf c add xray-server \
-            --url=${{ env.JF_RT_URL }} \
-            --access-token=${{ secrets.JFROG_TOKEN }} \
-            --interactive=false
+          JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
 
       - name: Run vulnerability scan on Rafay addon configs
         run: |
@@ -83,6 +64,7 @@ jobs:
         env:
           JF_URL: ${{ env.JF_RT_URL }}
           JF_ACCESS_TOKEN: ${{ env.JFROG_TOKEN }}
+          JFROG_TOKEN: ${{ secrets.JFROG_TOKEN }}
 
       # - name: 🔍 Scan Kubernetes YAMLs for misconfigurations
       #   uses: aquasecurity/trivy-action@master
