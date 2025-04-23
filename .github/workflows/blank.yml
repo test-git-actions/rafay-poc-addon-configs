@@ -17,6 +17,7 @@ env:
   RBv2_SIGNING_KEY: 'mgmkey'
   DISABLE_JOB_SUMMARY: false
   JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
+  JFROG_TOKEN: ${{ secrets.JFROG_TOKEN }}
 
 permissions:
   actions: read # for detecting the Github Actions environment.
@@ -44,12 +45,7 @@ jobs:
           # JFROG_CLI_RELEASES_REPO: '${{ env.JF_RT_URL }}/artifactory/${{ env.RT_REPO_VIRTUAL}}' 
           # JFROG_CLI_EXTRACTORS_REMOTE: '${{ env.JF_RT_URL }}/artifactory/${{ env.RT_REPO_VIRTUAL}}'
           # JF_GIT_TOKEN: ${{ secrets.GH_PAT }}
-          JF_ACCESS_TOKEN: $JF_ACCESS_TOKEN
-
-      - name: Set the JFrog Token
-        run: |
-          echo "JFROG_TOKEN=${{ steps.setup-cli.outputs.oidc-token || env.JF_ACCESS_TOKEN }}" >> $GITHUB_ENV
-
+          JF_ACCESS_TOKEN: $JFROG_TOKEN
 
       - name: Check if JF_ACCESS_TOKEN is available
         run: |
