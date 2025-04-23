@@ -1,0 +1,37 @@
+
+## Hardcode the resource names to something human friendly
+nameOverride: external-dns-gke
+
+## Watch these resources for new DNS records
+sources:
+  - ingress
+
+## use google as the dns provider
+provider: 
+  name: google
+
+# Specify the Google project (required when provider=google)
+# You'll need to create this secret containing your credentials.json
+google:
+  project: "platform-poc-rafay-d094"
+  serviceAccountSecret: "external-dns"
+
+## List of domains that can be managed. Should be managed by Google Cloud DNS
+domainFilters: ["gke.k8s.devtest.vegas"]
+
+# These help tell which records are owned by external-dns.
+registry: "txt"
+txtOwnerId: "k8s"
+
+## Limit external-dns resources
+resources:
+  limits:
+    memory: 50Mi
+  requests:
+    memory: 50Mi
+    cpu: 10m
+
+## ensure RBAC is enabled
+rbac:
+  create: true
+  apiVersion: v1
