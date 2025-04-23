@@ -55,14 +55,14 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
 
+      - name: Xray Scan
+        run: |
+          jf scan . --extended-table=true
+
       # - name: 🔍 Scan Kubernetes YAMLs for misconfigurations
       #   uses: aquasecurity/trivy-action@master
       #   with:
       #     scan-type: config
       #     scan-ref: ./cert-manager/
-
-      - name: Run Xray scan on Kubernetes configs
-        run: |
-          jf scan . --fail=false
 
 
