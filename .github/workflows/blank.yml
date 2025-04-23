@@ -47,7 +47,7 @@ jobs:
           # JF_GIT_TOKEN: ${{ secrets.GH_PAT }}
           JF_ACCESS_TOKEN: $JFROG_TOKEN
 
-      - name: Check if JF_ACCESS_TOKEN is available
+      - name: Check if JFROG_TOKEN is available
         run: |
           if [ -z "$JFROG_TOKEN" ]; then
             echo "Token is missing!"
@@ -55,6 +55,8 @@ jobs:
           else
             echo "JFROG_TOKEN is present"
           fi
+        env:
+          JFROG_TOKEN: ${{ secrets.JFROG_TOKEN }}
 
       - name: Configure JFrog CLI for Xray
         run: |
@@ -72,6 +74,8 @@ jobs:
             --fail=true \                               # Fail the job on issues (set false to just warn)
             --severity=medium,high,critical \           # Optional: scan only for these severity levels
             ./
+        env:
+          JFROG_TOKEN: ${{ secrets.JFROG_TOKEN }}
 
       - name: Xray Scan
         run: |
