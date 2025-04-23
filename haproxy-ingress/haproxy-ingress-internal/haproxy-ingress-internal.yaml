@@ -1,0 +1,32 @@
+controller:
+  kind: DaemonSet
+  ingressClass: haproxy-internal
+  ingressClassResource:
+    name: haproxy-internal
+  service:
+    type: LoadBalancer
+    loadBalancerIP: {{{ .global.Rafay.ClusterLabels.IngressInternalLBIP }}}
+    containerPort:
+      http: 80
+      https: 443
+      stat: 1024
+      healthz: 1042
+    nodePorts:
+      http: 30000
+      https: 30001
+      stat: 30002
+      healthz: 31042
+    tcpPorts:
+      - name: healthz
+        port: 1042
+        targetPort: 1042
+        nodePort: 31042
+    annotations:
+      cloud.google.com/load-balancer-type: "Internal"
+      networking.gke.io/internal-load-balancer-allow-global-access: "true"
+      cloud.google.com/network-tier: "Premium"
+  extraArgs:
+    - --namespace haproxy-ingress
+    - --create-namespace
+  startupProbe:
+    initialDelaySeconds: 15
