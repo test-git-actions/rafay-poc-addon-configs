@@ -66,7 +66,7 @@ jobs:
             --format json \                             # Use json for deeper output, or 'table' for human readable
             --fail=true \                               # Fail the job on issues (set false to just warn)
             --severity=medium,high,critical \           # Optional: scan only for these severity levels
-            ./
+            .
 
       - name: Xray Scan
         run: |
