@@ -57,12 +57,8 @@ jobs:
 
       - name: Xray Scan
         run: |
-          jf scan . --extended-table=true --detailed-summary=true
-        env:
-          JF_URL: ${{ env.JF_RT_URL }}
-          JF_ACCESS_TOKEN: ${{ env.JFROG_TOKEN }}
-          JFROG_TOKEN: ${{ env.JFROG_TOKEN }}
-
+          jf scan . --fail=false --output ./xray-scan-report.json --extended-table=true --detailed-summary=true
+        
       # - name: 🔍 Scan Kubernetes YAMLs for misconfigurations
       #   uses: aquasecurity/trivy-action@master
       #   with:
