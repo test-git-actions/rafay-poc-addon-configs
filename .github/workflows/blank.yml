@@ -54,42 +54,47 @@ jobs:
       - name: List the files
         run: ls
 
-      - name: Xray Scan
+      - name: Run JFrog Xray scan
         run: |
-          jf scan . --fail=false --output ./xray-scan-report.json --extended-table=true --detailed-summary=true
-        continue-on-error: true
-
-      - name: ✅ Run Checkov on YAMLs
-        uses: bridgecrewio/checkov-action@v2
-        with:
-          directory: .
-          quiet: true
-
-      - name: Check if SARIF report exists
-        run: |
-          if [ ! -f results.sarif ]; then
-            echo "SARIF report not found, skipping upload"
-            exit 0
-          fi
-          ls -l results.sarif
-        continue-on-error: true
-
-      - name: Upload SARIF report as GitHub artifact
+          jf scan ./external-dns ./haproxy-ingress ./nginx-ingress --fail=false --output ./xray-scan-report.json --extended-table=true --detailed-summary=true
+        
+      - name: Upload Xray Scan Results
         uses: actions/upload-artifact@v4
         with:
-          name: checkov-scan-results
-          path: results.sarif
+          name: xray-scan-report
+          path: ./xray-scan-report.json
 
-      - name: 🔍 Scan cert-manager addon
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-          scan-type: config
-          scan-ref: ./cert-manager
-        continue-on-error: true
+      # - name: ✅ Run Checkov on YAMLs
+      #   uses: bridgecrewio/checkov-action@v2
+      #   with:
+      #     directory: .
+      #     quiet: true
 
-      - name: 🔍 Scan external-dns addon
-        uses: aquasecurity/trivy-action@0.28.0
-        with:
-          scan-type: config
-          scan-ref: ./external-dns
-        continue-on-error: true
+      # - name: Check if SARIF report exists
+      #   run: |
+      #     if [ ! -f results.sarif ]; then
+      #       echo "SARIF report not found, skipping upload"
+      #       exit 0
+      #     fi
+      #     ls -l results.sarif
+      #   continue-on-error: true
+
+      # - name: Upload SARIF report as GitHub artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: checkov-scan-results
+      #     path: results.sarif
+
+      # - name: 🔍 Scan cert-manager addon
+      #   uses: aquasecurity/trivy-action@0.28.0
+      #   with:
+      #     scan-type: config
+      #     scan-ref: ./cert-manager
+      #   continue-on-error: true
+
+      # - name: 🔍 Scan external-dns addon
+      #   uses: aquasecurity/trivy-action@0.28.0
+      #   with:
+      #     scan-type: config
+      #     scan-ref: ./external-dns
+      #   continue-on-error: true
