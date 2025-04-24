@@ -64,7 +64,6 @@ jobs:
         with:
           directory: .
           quiet: true
-        continue-on-error: true
 
       - name: Check if SARIF report exists
         run: |
