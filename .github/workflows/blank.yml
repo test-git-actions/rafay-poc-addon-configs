@@ -71,6 +71,11 @@ jobs:
           directory: ./cert-manager
           quiet: true
 
+      - name: Upload SARIF to GitHub Security
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: results.sarif
+
       - name: 🔍 Scan cert-manager addon
         uses: aquasecurity/trivy-action@master
         with:
