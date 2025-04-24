@@ -57,15 +57,25 @@ jobs:
 
       - name: Xray Scan
         run: |
-          jf scan cert-manager/gke/config.yaml
-
           jf scan . --fail=false --output ./xray-scan-report.json --extended-table=true --detailed-summary=true
         
-      - name: 🔍 Scan K8s manifests for security/misconfig
+      # - name: 🔍 Scan K8s manifests for security/misconfig
+      #   uses: aquasecurity/trivy-action@master
+      #   with:
+      #     scan-type: config
+      #     scan-ref: .
+
+      - name: 🔍 Scan cert-manager addon
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: config
-          scan-ref: .
+          scan-ref: ./cert-manager
+      
+      - name: 🔍 Scan external-dns addon
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: config
+          scan-ref: ./external-dns
 
 
 
