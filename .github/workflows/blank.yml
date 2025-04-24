@@ -68,7 +68,7 @@ jobs:
       - name: ✅ Run Checkov on YAMLs
         uses: bridgecrewio/checkov-action@master
         with:
-          directory: ./cert-manager
+          directory: .
           quiet: true
 
       - name: Upload SARIF report as GitHub artifact
