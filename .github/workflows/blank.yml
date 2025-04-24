@@ -57,6 +57,8 @@ jobs:
 
       - name: Xray Scan
         run: |
+          jf scan cert-manager/gke/config.yaml
+
           jf scan . --fail=false --output ./xray-scan-report.json --extended-table=true --detailed-summary=true
         
       # - name: 🔍 Scan Kubernetes YAMLs for misconfigurations
