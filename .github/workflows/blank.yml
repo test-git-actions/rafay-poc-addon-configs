@@ -65,6 +65,12 @@ jobs:
       #     scan-type: config
       #     scan-ref: .
 
+      - name: ✅ Run Checkov on YAMLs
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: ./cert-manager
+          quiet: true
+
       - name: 🔍 Scan cert-manager addon
         uses: aquasecurity/trivy-action@master
         with:
