@@ -82,14 +82,14 @@ jobs:
           path: results.sarif
 
       - name: 🔍 Scan cert-manager addon
-        uses: aquasecurity/trivy-action@v0.10.0
+        uses: aquasecurity/trivy-action@0.28.0
         with:
           scan-type: config
           scan-ref: ./cert-manager
         continue-on-error: true
 
       - name: 🔍 Scan external-dns addon
-        uses: aquasecurity/trivy-action@v0.10.0
+        uses: aquasecurity/trivy-action@0.28.0
         with:
           scan-type: config
           scan-ref: ./external-dns
