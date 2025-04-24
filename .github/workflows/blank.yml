@@ -71,8 +71,11 @@ jobs:
           directory: .
           quiet: true
 
+      - name: Check if SARIF report exists
+        run: ls -l results.sarif
+
       - name: Upload SARIF report as GitHub artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: checkov-scan-results
           path: results.sarif
