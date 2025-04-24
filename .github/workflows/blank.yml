@@ -61,10 +61,11 @@ jobs:
 
           jf scan . --fail=false --output ./xray-scan-report.json --extended-table=true --detailed-summary=true
         
-      # - name: 🔍 Scan Kubernetes YAMLs for misconfigurations
-      #   uses: aquasecurity/trivy-action@master
-      #   with:
-      #     scan-type: config
-      #     scan-ref: ./cert-manager/
+      - name: 🔍 Scan K8s manifests for security/misconfig
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: config
+          scan-ref: .
+
 
 
