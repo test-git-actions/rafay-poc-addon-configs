@@ -35,12 +35,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # - name: Set JFROG environment variables
-      #   run: |
-      #     echo "JF_ACCESS_TOKEN=${{ secrets.JFROG_TOKEN }}" >> $GITHUB_ENV
-      #     echo "JFROG_TOKEN=${{ secrets.JFROG_TOKEN }}" >> $GITHUB_ENV
-      #     echo "JF_URL=${{ env.JF_RT_URL }}" >> $GITHUB_ENV
-
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4
         id: setup-cli
@@ -56,17 +50,10 @@ jobs:
           # JF_ACCESS_TOKEN: ${{ secrets.JFROG_TOKEN }}
 
       - name: Set the JFrog Token
-        if: true
         run: echo JFROG_TOKEN=${{ steps.setup-cli.outputs.oidc-token }} >> $GITHUB_ENV
 
-      - name: Run vulnerability scan on Rafay addon configs
-        run: |
-          jf scan \
-            --watches "*" \                             # Use specific watch if configured
-            --format json \                             # Use json for deeper output, or 'table' for human readable
-            --fail=true \                               # Fail the job on issues (set false to just warn)
-            --severity=medium,high,critical \           # Optional: scan only for these severity levels
-            .
+      - name: List the files
+        run: ls
 
       - name: Xray Scan
         run: |
