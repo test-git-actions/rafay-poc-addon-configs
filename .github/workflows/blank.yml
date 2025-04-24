@@ -57,7 +57,7 @@ jobs:
 
       - name: Xray Scan
         run: |
-          jf scan . --extended-table=true
+          jf scan . --extended-table=true --detailed-summary=true
         env:
           JF_URL: ${{ env.JF_RT_URL }}
           JF_ACCESS_TOKEN: ${{ env.JFROG_TOKEN }}
