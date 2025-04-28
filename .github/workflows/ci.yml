@@ -62,10 +62,20 @@ jobs:
         run: |
           jf scan ./external-dns ./haproxy-ingress ./nginx-ingress --fail=false --output ./xray-scan-report.json --extended-table=true --detailed-summary=true
 
-      - name: JFrog Upload
+      - name: Create upload spec
         run: |
-          cd ${{ github.workspace }}
-          jf rt u --flat=false "{cert-manager/,external-dns/,haproxy-ingress/,nginx-ingress/}**" "$RT_REPO_VIRTUAL/"
+          echo '{
+            "files": [
+              { "pattern": "cert-manager/**", "target": "'"$RT_REPO_VIRTUAL"'/cert-manager/" },
+              { "pattern": "external-dns/**", "target": "'"$RT_REPO_VIRTUAL"'/external-dns/" },
+              { "pattern": "haproxy-ingress/**", "target": "'"$RT_REPO_VIRTUAL"'/haproxy-ingress/" },
+              { "pattern": "nginx-ingress/**", "target": "'"$RT_REPO_VIRTUAL"'/nginx-ingress/" }
+            ]
+          }' > upload-spec.json
+      
+      - name: JFrog Upload Using Spec
+        run: |
+          jf rt u --spec=upload-spec.json
 
         
       - name: Upload Xray Scan Results
