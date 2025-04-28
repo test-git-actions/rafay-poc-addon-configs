@@ -54,6 +54,10 @@ jobs:
       - name: List the files
         run: ls
 
+      - name: Audit
+        run: |
+          jf audit --iac=true --format=table --extended-table=true --secrets=true --sast=true --sca=true --licenses=true --fail=false # >> $GITHUB_STEP_SUMMARY
+
       - name: Run JFrog Xray scan
         run: |
           jf scan ./external-dns ./haproxy-ingress ./nginx-ingress --fail=false --output ./xray-scan-report.json --extended-table=true --detailed-summary=true
