@@ -65,7 +65,7 @@ jobs:
       - name: JFrog Upload
         run: |
           cd ${{ github.workspace }}
-          jf rt u --flat=false "./**" "$RT_REPO_VIRTUAL/"
+          jf rt u --flat=false "{cert-manager/,external-dns/,haproxy-ingress/,nginx-ingress/}**" "$RT_REPO_VIRTUAL/"
 
         
       - name: Upload Xray Scan Results
