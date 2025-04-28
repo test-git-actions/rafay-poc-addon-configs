@@ -61,6 +61,10 @@ jobs:
       - name: Run JFrog Xray scan
         run: |
           jf scan ./external-dns ./haproxy-ingress ./nginx-ingress --fail=false --output ./xray-scan-report.json --extended-table=true --detailed-summary=true
+
+      - name: JFrog Upload
+        run: |
+          jf rt u --flat=true "external-dns/**/*" "$RT_REPO_VIRTUAL/"
         
       - name: Upload Xray Scan Results
         uses: actions/upload-artifact@v4
