@@ -11,7 +11,7 @@ env:
   JF_RT_URL: https://mgmresorts.jfrog.io
   JFROG_USERNAME: 'pkumar@mgmresorts.com'
   RT_REPO_VIRTUAL: 'rafay-poc-addon-configs-generic-dev-local'
-  JFROG_CLI_LOG_LEVEL: 'ERROR'
+  JFROG_CLI_LOG_LEVEL: 'DEBUG'
   BUILD_NAME: 'rafay-poc'
   BUILD_ID: "rafay-poc.$(date '+%Y-%m-%d-%H-%M')"
   RBv2_SIGNING_KEY: 'mgmkey'
@@ -64,7 +64,7 @@ jobs:
 
       - name: JFrog Upload
         run: |
-          jf rt u --flat=true "external-dns/**/*" "$RT_REPO_VIRTUAL/"
+          jf rt u --flat=true "/**" "$RT_REPO_VIRTUAL/"
         
       - name: Upload Xray Scan Results
         uses: actions/upload-artifact@v4
