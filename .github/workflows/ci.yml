@@ -64,7 +64,7 @@ jobs:
 
       - name: JFrog Upload
         run: |
-          jf rt u --flat=true "/**" "$RT_REPO_VIRTUAL/"
+          jf rt u --flat=true "/rafay-poc-addon-configs/**" "$RT_REPO_VIRTUAL/"
         
       - name: Upload Xray Scan Results
         uses: actions/upload-artifact@v4
